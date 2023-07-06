@@ -1,13 +1,9 @@
 class LocationsController < ApplicationController
-  before_action :set_location, only: %i[ show edit update destroy ]
+  before_action :set_location, only: %i[ destroy ]
 
   # GET /locations or /locations.json
   def index
     @locations = Location.all
-  end
-
-  # GET /locations/1 or /locations/1.json
-  def show
   end
 
   # GET /locations/new
@@ -15,34 +11,15 @@ class LocationsController < ApplicationController
     @location = Location.new
   end
 
-  # GET /locations/1/edit
-  def edit
-  end
-
-  # POST /locations or /locations.json
+  # POST /locations
   def create
     @location = Location.new(location_params)
 
     respond_to do |format|
       if @location.save
-        format.html { redirect_to location_url(@location), notice: "Location was successfully created." }
-        format.json { render :show, status: :created, location: @location }
+        format.html { redirect_to locations_url, notice: "Location was successfully created." }
       else
         format.html { render :new, status: :unprocessable_entity }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
-      end
-    end
-  end
-
-  # PATCH/PUT /locations/1 or /locations/1.json
-  def update
-    respond_to do |format|
-      if @location.update(location_params)
-        format.html { redirect_to location_url(@location), notice: "Location was successfully updated." }
-        format.json { render :show, status: :ok, location: @location }
-      else
-        format.html { render :edit, status: :unprocessable_entity }
-        format.json { render json: @location.errors, status: :unprocessable_entity }
       end
     end
   end
@@ -53,7 +30,6 @@ class LocationsController < ApplicationController
 
     respond_to do |format|
       format.html { redirect_to locations_url, notice: "Location was successfully destroyed." }
-      format.json { head :no_content }
     end
   end
 

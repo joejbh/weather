@@ -1,6 +1,6 @@
 <div id="<%= dom_id location %>">
   <p>
-    <strong>Address:</strong>
+    <strong>Street Address:</strong>
     <%= location.address %>
   </p>
 
@@ -20,8 +20,11 @@
   </p>
 
   <p>
-    <strong>Ip address:</strong>
+    <strong>IP Address:</strong>
     <%= location.ip_address %>
   </p>
 
+  <p>
+    <%= button_to "Delete", location, method: :delete %>
+  </p>
 </div>
