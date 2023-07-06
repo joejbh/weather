@@ -28,5 +28,6 @@ RSpec.describe "locations/index", type: :view do
     assert_select cell_selector, text: Regexp.new("State".to_s), count: 2
     assert_select cell_selector, text: Regexp.new("Zip".to_s), count: 2
     assert_select cell_selector, text: Regexp.new("IP Address".to_s), count: 2
+    assert_select "form>button", text: Regexp.new("Delete".to_s), count: 2
   end
 end
