@@ -1,7 +1,19 @@
 # README
 
-This README would normally document whatever steps are necessary to get the
-application up and running.
+
+## Getting Started
+
+1. Ensure you have all the correct system dependencies 
+   * Postgres
+   * Those listed in "Guide Assumptions" here: https://guides.rubyonrails.org/v5.0/getting_started.html
+2. Run `bundle`
+3. Run `bin/setup`
+4. Run `bin/dev`
+
+## Running Tests
+* run tests with `bundle exec rspec`
+
+----
 
 Things you may want to cover:
 
