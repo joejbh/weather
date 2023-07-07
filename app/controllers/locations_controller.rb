@@ -1,7 +1,10 @@
+require 'net/http'
+require 'json'
+
 class LocationsController < ApplicationController
   before_action :set_location, only: %i[ destroy ]
 
-  # GET /locations or /locations.json
+  # GET /locations
   def index
     @locations = Location.all
   end
@@ -15,6 +18,10 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(location_params)
 
+    if !@location.ip_address.blank?
+      @location = AddressService.new().get_by_ip_address(@location.ip_address)
+    end
+
     respond_to do |format|
       if @location.save
         format.html { redirect_to locations_url, notice: "Location was successfully created." }
@@ -24,7 +31,7 @@ class LocationsController < ApplicationController
     end
   end
 
-  # DELETE /locations/1 or /locations/1.json
+  # DELETE /locations/1
   def destroy
     @location.destroy
 
@@ -34,13 +41,14 @@ class LocationsController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_location
-      @location = Location.find(params[:id])
-    end
 
-    # Only allow a list of trusted parameters through.
-    def location_params
-      params.require(:location).permit(:address, :city, :state, :zip, :ip_address)
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_location
+    @location = Location.find(params[:id])
+  end
+
+  # Only allow a list of trusted parameters through.
+  def location_params
+    params.require(:location).permit(:address, :city, :state, :zip, :ip_address)
+  end
 end

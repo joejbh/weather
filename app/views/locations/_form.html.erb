@@ -1,4 +1,7 @@
-<%= form_with(model: location) do |form| %>
+<%= form_with(model: location,
+              data: {
+                controller: "new-location"
+              }) do |form| %>
 
   <% if location.errors.any? %>
     <div style="color: red">
@@ -12,7 +15,16 @@
     </div>
   <% end %>
 
-  <div class="space-y-3">
+  <div class="my-4">
+    <input type="checkbox"
+           id="ip_entry"
+           name="ip_entry"
+           class="rounded"
+           data-action="click->new-location#toggleIpEntry">
+    <label for="ip_entry">Add by IP Address</label>
+  </div>
+
+  <div data-new-location-target="basicFields" class="space-y-3">
     <div>
       <%= form.label :address, style: "display: block" %>
       <%= form.text_field :address, class: "form-input rounded" %>
@@ -34,7 +46,8 @@
     </div>
   </div>
 
-  <div hidden>
+  <div data-new-location-target="ipAddress"
+       hidden>
     <%= form.label :ip_address, "IP Address", style: "display: block" %>
     <%= form.text_field :ip_address, class: "form-input rounded" %>
   </div>

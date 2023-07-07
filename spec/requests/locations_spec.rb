@@ -1,6 +1,10 @@
 require 'rails_helper'
+require 'webmock/rspec'
 
 RSpec.describe "/locations", type: :request do
+  before do
+    WebMock.disable_net_connect!(allow_localhost: true)
+  end
 
   # This should return the minimal set of attributes required to create a valid
   # Location. As you add validations to Location, be sure to
@@ -11,7 +15,6 @@ RSpec.describe "/locations", type: :request do
       city: 'city',
       state: 'VA',
       zip: '88333',
-      ip_address: '2.2.2.2'
     }
     {
       city: 'city',
@@ -26,35 +29,24 @@ RSpec.describe "/locations", type: :request do
       city: nil,
       state: 'VA',
       zip: '88333',
-      ip_address: '2.2.2.2'
     }
     {
       address: 'address',
       city: 'city',
       state: nil,
       zip: '88333',
-      ip_address: '2.2.2.2'
     }
     {
       address: 'address',
       city: 'city',
       state: 'VA',
       zip: nil,
-      ip_address: '2.2.2.2'
     }
     {
       address: 'address',
       city: 'city',
       state: 'VA',
       zip: '111',
-      ip_address: '2.2.2.2'
-    }
-    {
-      address: 'address',
-      city: 'city',
-      state: 'VA',
-      zip: '88333',
-      ip_address: '1111.1.1.1'
     }
   }
 
@@ -87,6 +79,21 @@ RSpec.describe "/locations", type: :request do
       end
     end
 
+    context "with only and ip address" do
+      it "creates a new Location after fetching address data" do
+        response = ({ city: "Sample City", region: "myState", postal: "33333" }).to_json
+        ip_address = "22.22.22.22"
+
+        stub_request(:get, "https://ipapi.co/#{ip_address}/json/")
+          .to_return(status: 200,
+                     body: response)
+
+        expect {
+          post locations_url, params: { location: { ip_address: ip_address } }
+        }.to change(Location, :count).by(1)
+      end
+    end
+
     context "with invalid parameters" do
       it "does not create a new Location" do
         expect {
@@ -99,6 +106,23 @@ RSpec.describe "/locations", type: :request do
         expect(response).to have_http_status(:unprocessable_entity)
       end
 
+    end
+  end
+
+  context "with invalid ip address" do
+    it 'should not create a new Location' do
+      ip_address = "1111.1.1.1"
+
+      response = ({
+        ip: ip_address,
+        error: true,
+        reason: "Invalid IP Address"
+      }
+      ).to_json
+
+      stub_request(:get, "https://ipapi.co/#{ip_address}/json/")
+        .to_return(status: 200,
+                   body: response)
     end
   end
 

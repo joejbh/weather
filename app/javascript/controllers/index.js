@@ -2,8 +2,10 @@
 // Run that command whenever you add a new controller or create them with
 // ./bin/rails generate stimulus controllerName
 
-import {application} from "./application"
-import CollapsibleController from "./collapsible_controller"
+import { application } from "./application"
 
+import CollapsibleController from "./collapsible_controller"
 application.register("collapsible", CollapsibleController)
 
+import NewLocationController from "./new_location_controller"
+application.register("new-location", NewLocationController)
