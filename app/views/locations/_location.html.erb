@@ -1,39 +1,50 @@
-<div id="<%= dom_id location %>">
-  <div class="my-auto hover:bg-gray-100 px-5 py-4">
-    <div class="flex justify-between w-full">
-      <div>
+<div id="<%= dom_id location %>" data-controller="collapsible">
+  <button class="my-auto cursor-pointer hover:bg-gray-100 px-5 py-4 w-full"
+          type="button"
+          data-action="click->collapsible#toggle"
+  >
+    <span class="flex justify-between w-full">
+      <span class="flex flex-col justify-start">
 
         <% if !location.address.blank? %>
-          <p data-test-id="address_line">
+          <span data-test-id="address_line">
             <%= location.address %>
-          </p>
+          </span>
         <% end %>
 
-        <p data-test-id="city_state_zip">
+        <span data-test-id="city_state_zip">
           <%= location.city %>, <%= location.state %> <%= location.zip %>
-        </p>
+        </span>
 
         <% if !location.ip_address.blank? %>
-          <p class="text-sm italic text-gray-600" data-test-id="ip_address">
+          <span class="text-sm italic text-gray-600 text-left" data-test-id="ip_address">
             (<%= location.ip_address %>)
-          </p>
+          </span>
         <% end %>
 
-        <p class="mt-4">
-          <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>
-        </p>
-      </div>
+      </span>
 
-      <div class="text-2xl my-auto flex">
+      <span class="text-2xl my-auto flex">
         <span>
           70&deg;F / 90&deg;F
         </span>
 
-        <div class="w-7 max-h-7 my-auto">
+        <span class="w-7 max-h-7 my-auto ease-out duration-300"
+              data-collapsible-target="caret">
           <%= show_svg("caret_right.svg") %>
-        </div>
+        </span>
 
-      </div>
-    </div>
+      </span>
+    </span>
+  </button>
+
+  <div
+    class="px-5 py-4 h-full overflow-hidden"
+    data-collapsible-target="content"
+    hidden
+  >
+       <span class="mt-4">
+          <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>
+        </span>
   </div>
 </div>

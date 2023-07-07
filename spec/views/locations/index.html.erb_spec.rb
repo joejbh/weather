@@ -26,4 +26,5 @@ RSpec.describe "locations/index", type: :view do
     assert_select make_test_id('ip_address'), text: Regexp.new("2.2.2.222".to_s), count: 1
     assert_select make_test_id('delete'), text: "Delete", count: 2
   end
+
 end
