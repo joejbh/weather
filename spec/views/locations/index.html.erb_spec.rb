@@ -7,15 +7,15 @@ RSpec.describe "locations/index", type: :view do
         address: "Street Address",
         city: "City",
         state: "State",
-        zip: "Zip",
-        ip_address: "IP Address"
+        zip: "11111",
+        ip_address: "2.2.2.222"
       ),
       Location.create!(
         address: "Street Address",
         city: "City",
         state: "State",
-        zip: "Zip",
-        ip_address: "IP Address"
+        zip: "22222",
+        ip_address: "2.2.2.222"
       )
     ])
   end
