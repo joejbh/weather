@@ -1,11 +1,15 @@
 <p style="color: green"><%= notice %></p>
 
-<h1>Locations</h1>
+<h1 class="text-3xl">Locations</h1>
 
-<div id="locations">
-  <% @locations.each do |location| %>
+<div id="locations" class="-mx-5 my-4">
+  <% @locations.each_with_index do |location, index| %>
     <%= render location %>
+
+    <% if index < @locations.length - 1 %>
+      <hr/>
+    <% end %>
   <% end %>
 </div>
 
-<%= link_to "New location", new_location_path %>
+<%= link_to "Add location", new_location_path, class: "btn-primary" %>

@@ -1,16 +1,26 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <title>Weather</title>
-    <meta name="viewport" content="width=device-width,initial-scale=1">
-    <%= csrf_meta_tags %>
-    <%= csp_meta_tag %>
+<head>
+  <title>Weather</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag "tailwind", "inter-font", "data-turbo-track": "reload" %>
 
-    <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-    <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
-  </head>
+  <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
+  <%= javascript_include_tag "application", "data-turbo-track": "reload", defer: true %>
+</head>
 
-  <body>
-    <%= yield %>
-  </body>
+<body class="bg-blue-200">
+<header class="p-4 text-3xl bg-slate-800 text-white my-auto flex content-end">
+  <div class="h-3 w-9">
+    <%= show_svg("sun.svg") %>
+  </div>
+  The Weather
+</header>
+
+<main class="container mx-auto mt-10 p-5 bg-white rounded">
+  <%= yield %>
+</main>
+</body>
 </html>

@@ -1,30 +1,39 @@
 <div id="<%= dom_id location %>">
-  <p>
-    <strong>Street Address:</strong>
-    <%= location.address %>
-  </p>
+  <div class="my-auto hover:bg-gray-100 px-5 py-4">
+    <div class="flex justify-between w-full">
+      <div>
 
-  <p>
-    <strong>City:</strong>
-    <%= location.city %>
-  </p>
+        <% if !location.address.blank? %>
+          <p data-test-id="address_line">
+            <%= location.address %>
+          </p>
+        <% end %>
 
-  <p>
-    <strong>State:</strong>
-    <%= location.state %>
-  </p>
+        <p data-test-id="city_state_zip">
+          <%= location.city %>, <%= location.state %> <%= location.zip %>
+        </p>
 
-  <p>
-    <strong>Zip:</strong>
-    <%= location.zip %>
-  </p>
+        <% if !location.ip_address.blank? %>
+          <p class="text-sm italic text-gray-600" data-test-id="ip_address">
+            (<%= location.ip_address %>)
+          </p>
+        <% end %>
 
-  <p>
-    <strong>IP Address:</strong>
-    <%= location.ip_address %>
-  </p>
+        <p class="mt-4">
+          <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>
+        </p>
+      </div>
 
-  <p>
-    <%= button_to "Delete", location, method: :delete %>
-  </p>
+      <div class="text-2xl my-auto flex">
+        <span>
+          70&deg;F / 90&deg;F
+        </span>
+
+        <div class="w-7 max-h-7 my-auto">
+          <%= show_svg("caret_right.svg") %>
+        </div>
+
+      </div>
+    </div>
+  </div>
 </div>

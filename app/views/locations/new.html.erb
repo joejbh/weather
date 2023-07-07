@@ -1,9 +1,14 @@
-<h1>New location</h1>
+<div class="mb-4">
+  <%= link_to locations_path,
+              class: "link flex" do %>
+
+    <div class="rotate-180 h-6 w-6 my-auto">
+      <%= show_svg("caret_right.svg") %>
+    </div>
+    Back
+  <% end %>
+</div>
+
+<h1 class="text-3xl mb-4">New Location</h1>
 
 <%= render "form", location: @location %>
-
-<br>
-
-<div>
-  <%= link_to "Back to locations", locations_path %>
-</div>

@@ -1,4 +1,5 @@
 <%= form_with(model: location) do |form| %>
+
   <% if location.errors.any? %>
     <div style="color: red">
       <h2><%= pluralize(location.errors.count, "error") %> prohibited this location from being saved:</h2>
@@ -11,32 +12,34 @@
     </div>
   <% end %>
 
-  <div>
-    <%= form.label :address, style: "display: block" %>
-    <%= form.text_field :address %>
+  <div class="space-y-3">
+    <div>
+      <%= form.label :address, style: "display: block" %>
+      <%= form.text_field :address, class: "form-input rounded" %>
+    </div>
+
+    <div>
+      <%= form.label :city, style: "display: block" %>
+      <%= form.text_field :city, class: "form-input rounded" %>
+    </div>
+
+    <div>
+      <%= form.label :state, style: "display: block" %>
+      <%= form.text_field :state, class: "form-input rounded" %>
+    </div>
+
+    <div>
+      <%= form.label :zip, style: "display: block" %>
+      <%= form.text_field :zip, class: "form-input rounded" %>
+    </div>
   </div>
 
-  <div>
-    <%= form.label :city, style: "display: block" %>
-    <%= form.text_field :city %>
+  <div hidden>
+    <%= form.label :ip_address, "IP Address", style: "display: block" %>
+    <%= form.text_field :ip_address, class: "form-input rounded" %>
   </div>
 
-  <div>
-    <%= form.label :state, style: "display: block" %>
-    <%= form.text_field :state %>
-  </div>
-
-  <div>
-    <%= form.label :zip, style: "display: block" %>
-    <%= form.text_field :zip %>
-  </div>
-
-  <div>
-    <%= form.label :ip_address, style: "display: block" %>
-    <%= form.text_field :ip_address %>
-  </div>
-
-  <div>
-    <%= form.submit %>
+  <div class="mt-4">
+    <%= form.submit class: "btn-secondary" %>
   </div>
 <% end %>
