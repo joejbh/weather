@@ -14,4 +14,5 @@ class Location < ApplicationRecord
             },
             allow_blank: true
 
+  attr_accessor :forecasts
 end

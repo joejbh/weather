@@ -6,9 +6,6 @@ RSpec.describe "/locations", type: :request do
     WebMock.disable_net_connect!(allow_localhost: true)
   end
 
-  # This should return the minimal set of attributes required to create a valid
-  # Location. As you add validations to Location, be sure to
-  # adjust the attributes here as well.
   let(:valid_attributes) {
     {
       address: 'address',
@@ -52,6 +49,13 @@ RSpec.describe "/locations", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
+      r = ({ data: [
+        { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
+      ] }).to_json
+
+      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{valid_attributes[:zip]}&units=I").
+        to_return(status: 200, body: r, headers: {})
+
       Location.create! valid_attributes
       get locations_url
       expect(response).to be_successful

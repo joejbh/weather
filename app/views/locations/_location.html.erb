@@ -26,7 +26,7 @@
 
       <span class="text-2xl my-auto flex">
         <span>
-          70&deg;F / 90&deg;F
+          <%= location.forecasts[0].temp_low %>&deg;F / <%= location.forecasts[0].temp_high %>&deg;F
         </span>
 
         <span class="w-7 max-h-7 my-auto ease-out duration-300"
@@ -43,8 +43,10 @@
     data-collapsible-target="content"
     hidden
   >
-       <span class="mt-4">
-          <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>
-        </span>
+    <%= line_chart convert_for_line_chart location.forecasts %>
+
+    <span class="mt-4">
+      <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>
+    </span>
   </div>
 </div>
