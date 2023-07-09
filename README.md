@@ -32,3 +32,4 @@
 * Make automated browser tests
 * Pagination
 * Show more forecast details
+* Cache fetched forecasts for one day
