@@ -4,7 +4,7 @@
           data-action="click->collapsible#toggle"
   >
     <span class="flex justify-between w-full">
-      <span class="flex flex-col justify-start">
+      <span class="flex flex-col justify-start text-left text-sm sm:text-base">
 
         <% if !location.address.blank? %>
           <span data-test-id="address_line">
@@ -24,12 +24,17 @@
 
       </span>
 
-      <span class="text-2xl my-auto flex">
-        <span>
-          <%= location.forecasts[0].temp_low %>&deg;F / <%= location.forecasts[0].temp_high %>&deg;F
+      <span class="sm:text-2xl my-auto flex">
+        <span class="flex flex-col sm:block">
+          <span>
+            <%= location.forecasts[0].temp_low %>&deg;F /
+          </span>
+          <span>
+            <%= location.forecasts[0].temp_high %>&deg;F
+          </span>
         </span>
 
-        <span class="w-7 max-h-7 my-auto ease-out duration-300"
+        <span class="w-5 h-5 sm:w-7 sm:h-7 my-auto ease-out duration-300"
               data-collapsible-target="caret">
           <%= show_svg("caret_right.svg") %>
         </span>
@@ -45,8 +50,8 @@
   >
     <%= line_chart convert_for_line_chart location.forecasts %>
 
-    <span class="mt-4">
+    <div class="mt-6">
       <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>
-    </span>
+    </div>
   </div>
 </div>
