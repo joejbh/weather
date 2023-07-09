@@ -3,9 +3,8 @@
 // ./bin/rails generate stimulus controllerName
 
 import { application } from "./application"
-
 import CollapsibleController from "./collapsible_controller"
-application.register("collapsible", CollapsibleController)
-
 import NewLocationController from "./new_location_controller"
+
+application.register("collapsible", CollapsibleController)
 application.register("new-location", NewLocationController)
