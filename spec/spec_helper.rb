@@ -16,10 +16,6 @@ require 'capybara/rspec'
 #
 # See https://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 
-def make_test_id(test_id)
-  "[data-test-id='#{test_id}']"
-end
-
 RSpec.configure do |config|
   # rspec-expectations config goes here. You can use an alternate
   # assertion/expectation library such as wrong or the stdlib/minitest
@@ -106,4 +102,33 @@ RSpec.configure do |config|
   config.before(:each, type: :system, js: true) do
     driven_by :selenium_chrome_headless
   end
+end
+
+def make_test_id(test_id)
+  "[data-test-id='#{test_id}']"
+end
+
+def stub_weather_request(zip, forecasts)
+  stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{zip}&units=I").
+    to_return(status: 200, body: ({ data: forecasts }).to_json, headers: {})
+end
+
+def stub_address_request(ip_address, address)
+  stub_request(:get, "https://ipapi.co/#{ip_address}/json/").
+    to_return(status: 200, body: address.to_json, headers: {})
+end
+
+def make_mock_weather_response(datetime, low_temp, high_temp, description)
+  { datetime: datetime,
+    low_temp: low_temp,
+    high_temp: high_temp,
+    weather: { description: description } }
+end
+
+def make_mock_address_response(city, state, zip)
+  {
+    city: city,
+    region: state,
+    postal: zip,
+  }
 end

@@ -27,12 +27,9 @@ RSpec.describe 'create location page,', type: :system do
 
     context 'all fields are filled,' do
       it 'should save the record and show success message' do
-        r = ({ data: [
-          { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
-        ] }).to_json
+        r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
 
-        stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=33333&units=I").
-          to_return(status: 200, body: r, headers: {})
+        stub_weather_request(33333, [r])
 
         fill_in 'Address', with: "123 Street Ave"
         fill_in 'City', with: "Munitown"
@@ -49,24 +46,12 @@ RSpec.describe 'create location page,', type: :system do
 
   context 'checked "Add by IP Address"', type: :system, js: true do
     ip_address = "3.3.3.3"
-
-    ip_r = ({
-      city: 'Munitown',
-      region: 'OL',
-      postal: '33333',
-    }).to_json
-
-    r = ({ data: [
-      { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
-    ] }).to_json
+    ip_r = make_mock_address_response('Munitown', 'OL', '33333')
+    r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
 
     before do
-      stub_request(:get, "https://ipapi.co/#{ip_address}/json/").
-        to_return(status: 200, body: ip_r, headers: {})
-
-      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=33333&units=I").
-        to_return(status: 200, body: r, headers: {})
-
+      stub_address_request(ip_address, ip_r)
+      stub_weather_request(33333, [r])
       check 'Add by IP Address'
     end
 

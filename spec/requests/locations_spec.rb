@@ -49,12 +49,9 @@ RSpec.describe "/locations", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      r = ({ data: [
-        { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
-      ] }).to_json
+      r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
 
-      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{valid_attributes[:zip]}&units=I").
-        to_return(status: 200, body: r, headers: {})
+      stub_weather_request(valid_attributes[:zip], [r])
 
       Location.create! valid_attributes
       get locations_url
@@ -85,12 +82,10 @@ RSpec.describe "/locations", type: :request do
 
     context "with only an ip address" do
       it "creates a new Location after fetching address data" do
-        response = ({ city: "Sample City", region: "myState", postal: "33333" }).to_json
+        response = make_mock_address_response("Sample City", "myState", "33333")
         ip_address = "22.22.22.22"
 
-        stub_request(:get, "https://ipapi.co/#{ip_address}/json/")
-          .to_return(status: 200,
-                     body: response)
+        stub_address_request(ip_address, response)
 
         expect {
           post locations_url, params: { location: { ip_address: ip_address } }
@@ -117,43 +112,39 @@ RSpec.describe "/locations", type: :request do
     it 'should not create a new Location' do
       ip_address = "1111.1.1.1"
 
-      response = ({
+      invalid_response = {
         ip: ip_address,
         error: true,
         reason: "Invalid IP Address"
       }
-      ).to_json
 
-      stub_request(:get, "https://ipapi.co/#{ip_address}/json/")
-        .to_return(status: 200,
-                   body: response)
+      stub_address_request(ip_address, invalid_response)
+
+      expect {
+        post locations_url, params: { location: { ip_address: ip_address } }
+      }.to change(Location, :count).by(0)
+
     end
   end
 
   describe "DELETE /destroy" do
+    before do
+      r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
+
+      stub_weather_request(valid_attributes[:zip], [r])
+    end
+
     it "destroys the requested location" do
-      r = ({ data: [
-        { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
-      ] }).to_json
-
-      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{valid_attributes[:zip]}&units=I").
-        to_return(status: 200, body: r, headers: {})
-
       location = Location.create! valid_attributes
+
       expect {
         delete location_url(location)
       }.to change(Location, :count).by(-1)
     end
 
     it "redirects to the locations list" do
-      r = ({ data: [
-        { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
-      ] }).to_json
-
-      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{valid_attributes[:zip]}&units=I").
-        to_return(status: 200, body: r, headers: {})
-
       location = Location.create! valid_attributes
+
       delete location_url(location)
       expect(response).to redirect_to(locations_url)
     end
