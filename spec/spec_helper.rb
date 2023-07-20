@@ -118,11 +118,12 @@ def stub_address_request(ip_address, address)
     to_return(status: 200, body: address.to_json, headers: {})
 end
 
-def make_mock_weather_response(datetime, low_temp, high_temp, description)
+def make_mock_weather_response(datetime, low_temp, high_temp, description, precipitation)
   { datetime: datetime,
     low_temp: low_temp,
     high_temp: high_temp,
-    weather: { description: description } }
+    weather: { description: description },
+    precip: precipitation }
 end
 
 def make_mock_address_response(city, state, zip)

@@ -27,7 +27,7 @@ RSpec.describe 'create location page,', type: :system do
 
     context 'all fields are filled,' do
       it 'should save the record and show success message' do
-        r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
+        r = make_mock_weather_response("2023-03-2", 44, 77, "nice", 0.95)
 
         stub_weather_request(33333, [r])
 
@@ -47,7 +47,7 @@ RSpec.describe 'create location page,', type: :system do
   context 'checked "Add by IP Address"', type: :system, js: true do
     ip_address = "3.3.3.3"
     ip_r = make_mock_address_response('Munitown', 'OL', '33333')
-    r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
+    r = make_mock_weather_response("2023-03-2", 44, 77, "nice", 0.95)
 
     before do
       stub_address_request(ip_address, ip_r)

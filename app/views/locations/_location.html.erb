@@ -25,17 +25,12 @@
       </span>
 
       <span class="my-auto flex">
-        <span>
-          <span class="sm:text-2xl flex flex-col sm:block">
-            <span>
-              <%= location.forecasts[0].temp_low %>&deg;F /
-            </span>
-            <span>
-              <%= location.forecasts[0].temp_high %>&deg;F
-            </span>
+        <span class="sm:text-2xl flex flex-col sm:block">
+          <span>
+            <%= location.forecasts[0].temp_low %>&deg;F /
           </span>
           <span>
-            (<%= location.forecasts[0].description %>)
+            <%= location.forecasts[0].temp_high %>&deg;F
           </span>
         </span>
 
@@ -54,7 +49,21 @@
     data-collapsible-target="content"
     data-test-id="chart"
   >
-    <%= line_chart convert_for_line_chart location.forecasts %>
+    <div>
+
+      <h2 class="text-xl">Today's Forecast Details</h2>
+      <div>
+        <%= location.forecasts[0].description %>
+      </div>
+      <div>
+        Chance of Rain: <%= (location.forecasts[0].precipitation * 100).to_i %>%
+      </div>
+    </div>
+
+    <div class="mt-6">
+      <h2 class="text-xl">7 Day Forecast</h2>
+      <%= line_chart convert_for_line_chart location.forecasts %>
+    </div>
 
     <div class="mt-6">
       <%= button_to "Delete", location, method: :delete, class: "btn-danger", data: { test_id: "delete" } %>

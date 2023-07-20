@@ -6,7 +6,7 @@ class WeatherService
     parsed = JSON.parse(resp)
 
     parsed["data"].slice(0, 7).map do |f|
-      Forecast.new(f["datetime"], f["low_temp"], f["high_temp"], f["weather"]["description"])
+      Forecast.new(f["datetime"], f["low_temp"], f["high_temp"], f["weather"]["description"], f["precip"])
     end
   end
 end

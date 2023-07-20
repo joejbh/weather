@@ -3,9 +3,9 @@ RSpec.describe LocationsHelper, type: :helper do
   describe "convert_for_chart" do
     it "should correctly map" do
       forecasts = [
-        Forecast.new("2023-03-2", "44", "77", "Nice"),
-        Forecast.new("2023-03-3", "55", "66", "Nice"),
-        Forecast.new("2023-03-4", "77", "88", "Nice")]
+        Forecast.new("2023-03-2", 44, 77, "Nice", 0.70),
+        Forecast.new("2023-03-3", 55, 66, "Nice", 0),
+        Forecast.new("2023-03-4", 77, 88, "Nice", 0)]
 
       expected = [
         { name: "Low", data: { "2023-03-2" => 44, "2023-03-3" => 55, "2023-03-4" => 77 } },

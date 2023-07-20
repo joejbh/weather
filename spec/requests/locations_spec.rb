@@ -49,7 +49,7 @@ RSpec.describe "/locations", type: :request do
 
   describe "GET /index" do
     it "renders a successful response" do
-      r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
+      r = make_mock_weather_response("2023-03-2", 44, 77, "nice", 0.95)
 
       stub_weather_request(valid_attributes[:zip], [r])
 
@@ -129,7 +129,7 @@ RSpec.describe "/locations", type: :request do
 
   describe "DELETE /destroy" do
     before do
-      r = make_mock_weather_response("2023-03-2", "44", "77", "nice")
+      r = make_mock_weather_response("2023-03-2", 44, 77, "nice", 0.95)
 
       stub_weather_request(valid_attributes[:zip], [r])
     end
