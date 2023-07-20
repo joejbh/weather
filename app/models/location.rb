@@ -15,4 +15,15 @@ class Location < ApplicationRecord
             allow_blank: true
 
   attr_accessor :forecasts
+
+  after_find :fill_forecasts
+  # after_initialize :post_init
+
+  private
+
+  def fill_forecasts
+    if !self.zip.blank?
+      self.forecasts = WeatherService.new.get_forecasts_by_zip self.zip
+    end
+  end
 end

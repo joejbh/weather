@@ -6,11 +6,7 @@ class LocationsController < ApplicationController
 
   # GET /locations
   def index
-    @locations = Location.all.map do |location|
-      location.forecasts = WeatherService.new().get_forecasts_by_zip location.zip
-
-      location
-    end
+    @locations = Location.all
   end
 
   # GET /locations/new

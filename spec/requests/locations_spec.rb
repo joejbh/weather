@@ -132,6 +132,13 @@ RSpec.describe "/locations", type: :request do
 
   describe "DELETE /destroy" do
     it "destroys the requested location" do
+      r = ({ data: [
+        { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
+      ] }).to_json
+
+      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{valid_attributes[:zip]}&units=I").
+        to_return(status: 200, body: r, headers: {})
+
       location = Location.create! valid_attributes
       expect {
         delete location_url(location)
@@ -139,6 +146,13 @@ RSpec.describe "/locations", type: :request do
     end
 
     it "redirects to the locations list" do
+      r = ({ data: [
+        { datetime: "2023-03-2", low_temp: "44", high_temp: "77", weather: { description: "nice" } },
+      ] }).to_json
+
+      stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{valid_attributes[:zip]}&units=I").
+        to_return(status: 200, body: r, headers: {})
+
       location = Location.create! valid_attributes
       delete location_url(location)
       expect(response).to redirect_to(locations_url)
