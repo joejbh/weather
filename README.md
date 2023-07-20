@@ -15,12 +15,18 @@
 
 ## Running Tests
 
+* Ensure you have chrome or chromium installed
 * run tests with `bundle exec rspec`
+* watch tests with `bundle exec guard`
 
 ## Notes
 
+* The site is mobile friendly.
+* Calls weatherbit for weather information
+* Calls ipapi.co for getting address information by ip address
 * I believe in only exposing endpoints that have a legitimate business need for security reasons. This is why I removed
   the ability to fetch the data via json and I also removed the show endpoints.
+*
 
 ## TODOs
 
