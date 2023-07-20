@@ -1,7 +1,7 @@
 require 'rails_helper'
 RSpec.describe LocationsHelper, type: :helper do
   describe "convert_for_chart" do
-    it "" do
+    it "should correctly map" do
       forecasts = [
         Forecast.new("2023-03-2", "44", "77", "Nice"),
         Forecast.new("2023-03-3", "55", "66", "Nice"),
