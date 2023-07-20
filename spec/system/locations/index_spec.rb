@@ -29,11 +29,12 @@ RSpec.describe "Home page,", type: :system do
       visit locations_path
     end
 
-    it 'should display its temperature and not initially show chart' do
+    it 'should display temperature and description, but not initially show chart' do
       expect(page).to have_content("Austin")
       expect(page).to have_content("Texas")
       expect(page).to have_content("78751")
       expect(page).to have_content("44°F / 77°F")
+      expect(page).to have_content("nice")
 
       expect(page).to_not have_css(make_test_id("chart"))
     end

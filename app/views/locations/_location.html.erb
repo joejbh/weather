@@ -24,13 +24,18 @@
 
       </span>
 
-      <span class="sm:text-2xl my-auto flex">
-        <span class="flex flex-col sm:block">
-          <span>
-            <%= location.forecasts[0].temp_low %>&deg;F /
+      <span class="my-auto flex">
+        <span>
+          <span class="sm:text-2xl flex flex-col sm:block">
+            <span>
+              <%= location.forecasts[0].temp_low %>&deg;F /
+            </span>
+            <span>
+              <%= location.forecasts[0].temp_high %>&deg;F
+            </span>
           </span>
           <span>
-            <%= location.forecasts[0].temp_high %>&deg;F
+            (<%= location.forecasts[0].description %>)
           </span>
         </span>
 

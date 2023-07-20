@@ -14,7 +14,7 @@ RSpec.describe WeatherService do
       stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{11111}&units=I").
         to_return(status: 200, body: r, headers: {})
 
-      actual = WeatherService.new().get_forecasts_by_zip(11111)
+      actual = WeatherService.new.get_forecasts_by_zip(11111)
       expected = [Forecast.new("2023-03-2", "44", "77", "nice")]
 
       expect(actual.to_json).to eq(expected.to_json)
@@ -30,7 +30,7 @@ RSpec.describe WeatherService do
       stub_request(:get, "https://api.weatherbit.io/v2.0/forecast/daily?key=&postal_code=#{11111}&units=I").
         to_return(status: 200, body: r, headers: {})
 
-      actual = WeatherService.new().get_forecasts_by_zip(11111)
+      actual = WeatherService.new.get_forecasts_by_zip(11111)
 
       expect(actual.length).to eq(7)
     end
