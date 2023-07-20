@@ -44,9 +44,10 @@
   </button>
 
   <div
+    hidden
     class="px-5 py-4 h-full overflow-hidden"
     data-collapsible-target="content"
-    hidden
+    data-test-id="chart"
   >
     <%= line_chart convert_for_line_chart location.forecasts %>
 
