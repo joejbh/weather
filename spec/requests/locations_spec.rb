@@ -83,7 +83,7 @@ RSpec.describe "/locations", type: :request do
       end
     end
 
-    context "with only and ip address" do
+    context "with only an ip address" do
       it "creates a new Location after fetching address data" do
         response = ({ city: "Sample City", region: "myState", postal: "33333" }).to_json
         ip_address = "22.22.22.22"

@@ -18,10 +18,6 @@ class LocationsController < ApplicationController
   def create
     @location = Location.new(location_params)
 
-    if !@location.ip_address.blank?
-      @location = AddressService.new().get_by_ip_address(@location.ip_address)
-    end
-
     respond_to do |format|
       if @location.save
         format.html { redirect_to locations_url, notice: "Location was successfully created." }

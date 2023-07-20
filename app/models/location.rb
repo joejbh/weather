@@ -16,14 +16,24 @@ class Location < ApplicationRecord
 
   attr_accessor :forecasts
 
-  after_find :fill_forecasts
-  # after_initialize :post_init
+  after_find :after_find
+  before_validation :before_validation
 
   private
 
-  def fill_forecasts
+  def after_find
     if !self.zip.blank?
       self.forecasts = WeatherService.new.get_forecasts_by_zip self.zip
+    end
+  end
+
+  def before_validation
+    if !self.ip_address.blank?
+      l = AddressService.new.get_by_ip_address(self.ip_address)
+      self.address = l.address
+      self.city = l.city
+      self.state = l.state
+      self.zip = l.zip
     end
   end
 end
